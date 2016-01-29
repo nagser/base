@@ -1,0 +1,25 @@
+/*
+Стили, общие для всех страниц
+*/
+body {
+    /* Хак для модальных окон. Скрывать скролл страницы при показе окна */
+    padding-right: 0;
+    margin-right: 0;
+
+      &.modal-open {
+        overflow: hidden;
+      }
+    /* //Хак для модальных окон. Скрывать скролл страницы при показе окна */
+}
+
+/* Разрешить скролл внутри модального окна */
+.modal-body {
+  overflow-y: auto;
+}
+
+/*Убрать лишние бордеры в гриде*/
+.kv-table-wrap tr > td:first-child {
+  border-top: none;
+  font-size: inherit;
+  margin-top: 0;
+}
