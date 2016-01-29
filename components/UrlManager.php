@@ -1,6 +1,6 @@
 <?php
 
-namespace app\base\components;
+namespace nagser\base\components;
 
 use codemix\localeurls\UrlManager as CodeMixUrlManager;
 use \Yii;
