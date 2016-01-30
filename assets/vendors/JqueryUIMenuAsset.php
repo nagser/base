@@ -1,6 +1,6 @@
 <?php
 
-namespace app\base\assets\vendors;
+namespace nagser\base\assets\vendors;
 
 use yii\web\AssetBundle;
 

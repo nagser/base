@@ -1,6 +1,6 @@
 <?php
 
-namespace app\base\widgets\Select2;
+namespace nagser\base\widgets\Select2;
 
 use \Yii;
 use yii\helpers\ArrayHelper;

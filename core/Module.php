@@ -1,12 +1,10 @@
 <?php
 
-namespace app\base;
+namespace nagser\base\core;
 
 use \Yii;
-use \yii\base\Module;
-use app\base\helpers\CustomFileHelper;
 
-class CustomModule extends Module
+class Module extends \yii\base\Module
 {
 	public $mainModel;
 	public $searchModel;
@@ -40,24 +38,5 @@ class CustomModule extends Module
         $this->searchModel = $modelsPath . $moduleClass . 'Search';
         $this->recordModel = $modelsPath . $moduleClass . 'Record';
     }
-
-//    /**
-//     * Получение локализации для модуля
-//     * */
-//    public function getModuleMessages(){
-//        $currentLanguage = Yii::$app->language;
-//        $moduleLangFile = Yii::getAlias('@moduleFullPath').'/messages/'.$currentLanguage.'/'.Yii::getAlias('@moduleAlias') . '.php';
-//        $systemLangFile = Yii::getAlias('@app').'/base/messages/'.$currentLanguage.'/system.php';
-//        $yiiLangFile = Yii::getAlias('@yii').'/messages/'.$currentLanguage.'/yii.php';
-//        $params = [
-//            'strict' => false,
-//            'return' => []
-//        ];
-//        return [
-//            'moduleLang' => CustomFileHelper::requireFile($moduleLangFile, $params),
-//            'systemLang' => CustomFileHelper::requireFile($systemLangFile, $params),
-//            'yiiLang' => CustomFileHelper::requireFile($yiiLangFile, $params)
-//        ];
-//    }
 
 }
