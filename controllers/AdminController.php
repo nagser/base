@@ -35,11 +35,11 @@ class AdminController extends Controller
      * */
     public function actionIndex()
     {
-        $searchModel = new $this->searchModel;
-        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        $modelSearch = Yii::createObject($this->modelSearch);
+        $dataProvider = $modelSearch->search(\Yii::$app->request->queryParams);
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
+            'modelSearch' => $modelSearch,
         ]);
     }
 
@@ -51,22 +51,22 @@ class AdminController extends Controller
     public function actionUpdate($id = null)
     {
         if ($id) {
-            $recordModel = $this->findRecordModel($id);
+            $model = $this->findRecordModel($id);
         } else {
-            $recordModel = new $this->recordModel;
+            $model = Yii::createObject($this->model);
         }
 
-        /** @var Model $recordModel * */
-        if ($recordModel->load(Yii::$app->request->post()) and $recordModel->save()) {
+        /** @var Model $model * */
+        if ($model->load(Yii::$app->request->post()) and $model->save()) {
             $this->trigger(self::EVENT_AFTER_UPDATE);
         } else {
             if (Yii::$app->request->isAjax) {
                 return $this->renderAjax('update', [
-                    'recordModel' => $recordModel,
+                    'model' => $model,
                 ]);
             } else {
                 return $this->render('update', [
-                    'recordModel' => $recordModel,
+                    'model' => $model,
                 ]);
             }
         }
@@ -81,8 +81,8 @@ class AdminController extends Controller
     public function actionDelete($id)
     {
         /** @var Model $recordModel * */
-        if ($recordModel = $this->findRecordModel($id)) {
-            $recordModel->delete();
+        if ($model = $this->findRecordModel($id)) {
+            $model->delete();
             if(Yii::$app->request->isAjax){
                 return json_encode(['id' => $id, 'type' => 'success', 'message' => \Yii::t('system', 'Delete completed')], JSON_UNESCAPED_UNICODE);
             } else {
@@ -100,16 +100,14 @@ class AdminController extends Controller
      */
     public function actionView($id)
     {
-        if ($recordModel = $this->findRecordModel($id)) {
+        if ($model = $this->findRecordModel($id)) {
             if (Yii::$app->request->isAjax) {
                 return $this->renderAjax('view', [
-                    'recordModel' => $recordModel,
-//					'model' => new Model(),
+                    'model' => $model,
                 ]);
             } else {
                 return $this->render('view', [
-                    'recordModel' => $recordModel,
-//					'model' => new Model(),
+                    'model' => $model,
                 ]);
             }
         }
@@ -125,17 +123,17 @@ class AdminController extends Controller
     public function actionSelect2List($search = '', $value = '', $colAlias = 'title')
     {
         /** @var Model $recordModel * */
-        $recordModel = $this->recordModel;
+        $model = $this->model;
         /** @var Model $recordModelObject * */
-        $recordModelObject = new $recordModel;
-        $table = $recordModel::tableName();
-        $alias = $recordModelObject->isMultiLangField($colAlias) ? $colAlias : $table . '.' . $colAlias;
+        $modelObject = Yii::createObject($model);
+        $table = $model::tableName();
+        $alias = $modelObject->isMultiLangField($colAlias) ? $colAlias : $table . '.' . $colAlias;
         $out = ['more' => false];
         if (!is_null($search)) {
-            $query = new MultilingualQuery($recordModel);
+            $query = new MultilingualQuery($model);
             $query->select('DISTINCT(' . $alias . ') AS id, ' . $alias . ' AS text')
                 ->from($table);
-            if ($recordModelObject->isMultiLangField($colAlias)) {
+            if ($modelObject->isMultiLangField($colAlias)) {
                 $query->joinWith('translation');
             }
             $query->where($alias . ' LIKE "%' . $search . '%"')
@@ -144,7 +142,7 @@ class AdminController extends Controller
             $data = $command->queryAll();
             $out['results'] = array_values($data);
         } elseif ($value > 0) {
-            $out['results'] = ['id' => $value, 'text' => $recordModel::find($value)->$colAlias];
+            $out['results'] = ['id' => $value, 'text' => $model::find($value)->$colAlias];
         }
         return Json::encode($out);
     }

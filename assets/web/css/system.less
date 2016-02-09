@@ -2,14 +2,14 @@
 Стили, общие для всех страниц
 */
 body {
-    /* Хак для модальных окон. Скрывать скролл страницы при показе окна */
-    padding-right: 0;
-    margin-right: 0;
+  /* Хак для модальных окон. Скрывать скролл страницы при показе окна */
+  padding-right: 0;
+  margin-right: 0;
 
-      &.modal-open {
-        overflow: hidden;
-      }
-    /* //Хак для модальных окон. Скрывать скролл страницы при показе окна */
+  &.modal-open {
+    overflow: hidden;
+  }
+  /* //Хак для модальных окон. Скрывать скролл страницы при показе окна */
 }
 
 /* Разрешить скролл внутри модального окна */
@@ -22,4 +22,13 @@ body {
   border-top: none;
   font-size: inherit;
   margin-top: 0;
+}
+
+/*Виджет загрузки изображений - убрать тень*/
+.file-preview-frame {
+  box-shadow: none;
+}
+
+.file-preview-frame:not(.file-preview-error):hover {
+  box-shadow: none;
 }

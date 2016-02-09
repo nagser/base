@@ -11,7 +11,7 @@ use nagser\base\models\Model;
 
 /**
  * @property Model $model
- * @property Model $searchModel
+ * @property Model $modelSearch
  * */
 class Controller extends \yii\web\Controller
 {
@@ -55,33 +55,16 @@ class Controller extends \yii\web\Controller
     }
 
     /**
-     * Геттер для модели
-     * @return string
-     * */
-    protected function getModel()
-    {
-        return ArrayHelper::getValue($this->module->modelMap, 'Model', 'nagser\base\models\Model');
-    }
-
-    /**
-     * Геттер для поисковой модели
-     * @return string
-     * */
-    protected function getSearchModel()
-    {
-        return ArrayHelper::getValue($this->module->modelMap, 'SearchModel', 'nagser\base\models\Model');
-    }
-
-    /**
      * Поиск модели
      * @param $id integer||string
      * @throws NotFoundHttpException
-     * @return object app\base\models\CustomRecordModel
+     * @return \nagser\base\models\Model object
      */
     protected function findRecordModel($id)
     {
         $model = $this->model;
-        if((new $model)->multiLangAttributes){
+        $modelObject = Yii::createObject($model);
+        if($modelObject->multiLangAttributes){
             $model = $model::find()->where(array('id' => $id))->multilingual()->one();
         } else {
             $model = $model::find()->where(array('id' => $id))->one();

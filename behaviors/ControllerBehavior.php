@@ -3,11 +3,10 @@
 namespace nagser\base\behaviors;
 
 use nagser\base\helpers\FileHelper;
-use app\modules\themes\components\ThemeConfigurator;
+use nagser\themes\components\ThemeConfigurator;
 use yii\base\Behavior;
 use nagser\base\controllers\Controller;
 use \Yii;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\View;
 
@@ -50,7 +49,7 @@ class ControllerBehavior extends Behavior
 	}
 
 	/**
-	 * Загрузка перевода текущего модуля и приложения в массив JavaScript
+	 * Загрузка перевода в массив JavaScript
 	 * */
 	private function registerTranslationsInJs()
 	{

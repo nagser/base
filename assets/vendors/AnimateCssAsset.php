@@ -7,7 +7,7 @@ use yii\web\AssetBundle;
 
 class AnimateCssAsset extends AssetBundle
 {
-	public $sourcePath = '@app/vendor/bower/animate.css';
+	public $sourcePath = '@bower/animate.css';
 	public $css = [
 		'animate.css',
 	];

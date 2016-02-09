@@ -7,7 +7,7 @@ use yii\web\AssetBundle;
 
 class FrontendAsset extends AssetBundle
 {
-    public $sourcePath = '@app/vendor/nagser/base/assets/web';
+    public $sourcePath = '@nagser/base/assets/web';
     public $baseUrl = '@web';
     public $css = [
         'css/system.less',

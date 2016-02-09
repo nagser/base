@@ -16,7 +16,27 @@
     ],
 
     "require": {
-        "yiisoft/yii2": "2.0.*"
+        "yiisoft/yii2": "2.0.*",
+        "components/font-awesome": "~4.3",
+        "driftyco/ionicons": "~2.0",
+        "kartik-v/yii2-detail-view": "dev-master",
+        "kartik-v/yii2-grid": "dev-master",
+        "kartik-v/yii2-mpdf": "~1.0",
+        "kartik-v/yii2-widget-activeform": "*",
+        "kartik-v/yii2-widgets": "~3.4",
+        "omgdef/yii2-multilingual-behavior": "~2.1",
+        "kartik-v/yii2-widget-select2": "@dev",
+        "codemix/yii2-localeurls": "~1.2",
+        "creocoder/yii2-nested-sets": "0.9.*",
+        "mootensai/yii2-enhanced-gii": "dev-master",
+        "dektrium/yii2-user": "^0.9.5",
+        "dektrium/yii2-rbac": "^0.1.0",
+        "kartik-v/yii2-checkbox-x": "*",
+        "kartik-v/yii2-popover-x": "*",
+        "insolita/yii2-migration-generator": "dev-master",
+        "yiisoft/yii2-codeception": "^2.0",
+        "fishvision/yii2-migrate": "dev-master",
+        "mustache/mustache": "^2.9"
     },
 
     "autoload": {

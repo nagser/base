@@ -41,7 +41,6 @@ class Model extends ActiveRecord
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
 			'sort'=> ['defaultOrder' => ['id' => SORT_DESC]],
-//			'pagination' => Yii::$app->params['grid']['pagination'],
 		]);
 		$this->load($params);
 		if (!$this->validate()) {

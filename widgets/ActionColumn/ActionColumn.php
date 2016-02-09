@@ -1,12 +1,11 @@
 <?php
 
-namespace app\base\widgets\ActionColumn;
+namespace nagser\base\widgets\ActionColumn;
 
-use kartik\grid\ActionColumn;
 use \Yii;
 use yii\helpers\ArrayHelper;
 
-class AdminActionColumn extends ActionColumn {
+class ActionColumn extends \kartik\grid\ActionColumn {
 
 	public $headerOptions = [
 		'class' => 'minWidth',
@@ -30,7 +29,7 @@ class AdminActionColumn extends ActionColumn {
         'data-type' => 'danger',
 		'data-method' => false,
 		'data-confirm' => false,
-		'data-pjax' => 'true',
+		'data-pjax' => true,
 	];
 
 	public function init(){

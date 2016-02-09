@@ -6,7 +6,7 @@ use yii\web\AssetBundle;
 
 class IoniconsAsset extends AssetBundle
 {
-	public $sourcePath = '@app/vendor/driftyco/ionicons';
+	public $sourcePath = '@vendor/driftyco/ionicons';
 	public $css = [
 		'css/ionicons.css',
 	];

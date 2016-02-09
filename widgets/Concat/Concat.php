@@ -1,6 +1,6 @@
 <?php
 
-namespace app\base\widgets\concat;
+namespace nagser\base\widgets\concat;
 
 use kartik\base\Widget;
 use yii\base\InvalidParamException;

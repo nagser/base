@@ -12,29 +12,13 @@ function Language(language) {
 }
 var Lang = new Language(language);
 
-///**
-//*
-//* */
-//function StorageClass() {
-//    this.set = function(key, string){
-//        localStorage.setItem(key, string);
-//    };
-//    this.get = function(key){
-//        localStorage.getItem(key);
-//    };
-//    this.clear = function(){
-//        localStorage.clear();
-//    }
-//}
-//var storage = new StorageClass();
-
 /**
 * Отсылка ajax запроса и вывод результата в уведомлениии
 * */
 function Request(){
     this.send = function(obj){
         var params = {
-            type: 'GET',
+            type: obj.data('buttonType') ? obj.data('buttonType') : 'GET',
             url: obj.data('url') ? obj.data('url') : obj.attr('href')
         };
         if(obj instanceof jQuery){
@@ -52,7 +36,7 @@ function Request(){
                 params.modalId != 'false' && $('#' + params.modalId).modal('hide');
                 setTimeout(function () {
                     new PNotify({
-                        title: Lang.get('system', 'Notify'),//todo Lang.get()
+                        title: Lang.get('system', 'Notify'),
                         text: data.message,
                         type: data.type,
                         hide: false,
@@ -90,7 +74,6 @@ function ModalsStorage(){
     this.removeFromStorage = function(modalId){
         var modal = this.storage[modalId];
         if(modal.parent){
-            //console.log(modal.parent);
             this.storage[modal.parent.modalId]['active'] = true;
             this.storage.active = this.storage[modal.parent.modalId];
         }
@@ -114,23 +97,26 @@ function Modal() {
         }
         return this.params;
     };
+    this.bindHiddenEvent = function(modalId){
+        modalsStorage.removeFromStorage(modalId);
+        $('#' + modalId).remove();
+    };
+    this.bindShownEvent = function(){
+        $('.modal-body').css('maxHeight', $(window).height() - 150);
+    };
     this.display = function(modalId){
+        var self = this;
         $('#' + modalId)
-            .on('hidden.bs.modal', function (e) {
-                //modalsStorage.storage[modalId]['parent'] == false && $('html, body').css('overflow', 'auto');
-                modalsStorage.removeFromStorage(modalId);//удалить окно и пометить родителя активным
-                $(this).remove();
-                //console.log('removed!');
-
+            .on('hidden.bs.modal', function () {
+                self.bindHiddenEvent(modalId);
             })
-            .on('shown.bs.modal', function(e){
-                $('.modal-body').css('maxHeight', $(window).height() - 120);
+            .on('shown.bs.modal', function(){
+                self.bindShownEvent();
             })
             .modal();
         return false;
     };
     this.displayDialog = function (obj) {
-        //$('html, body').css('overflow', 'hidden');
         var self = this;
         var modal = {};
         var modalId = 'id-' + $.now();
@@ -138,12 +124,15 @@ function Modal() {
         modal.buttons = [
             Mustache.render($('#modal-box-button').html(), {
                 class: 'btn btn-default',
-                label: Lang.get('system', 'Close')//todo Lang.get()
+                label: Lang.get('system', 'Close')
             }),
             Mustache.render($('#modal-box-link').html(), {
                 class: 'btn btn-danger jsRequest',
-                label: Lang.get('system', 'Continue'),//todo Lang.get()
+                label: Lang.get('system', 'Continue'),
                 link: obj.attr('href'),
+                button : {
+                    type: obj.data('buttonType') ? obj.data('buttonType') : 'GET'
+                },
                 data: {
                     modalId: modalId,
                     containerForUpdate: obj.parents('.kv-grid-container').attr('id') ? obj.parents('.kv-grid-container').attr('id') : false,
@@ -168,7 +157,6 @@ function Modal() {
      * @property obj - объект jquery, по которому был клик для вызова модального окна
      * */
     this.displayAjaxContent = function(obj){
-        //$('html, body').css('overflow', 'hidden');
         var self = this;
         var modal = {};
         var modalId = 'id-' + $.now();
@@ -204,7 +192,7 @@ $(function () {
      * */
     if (typeof notification !== 'undefined') {
         new PNotify({
-            title: Lang.get('system', 'Notify'),//todo Lang.get()
+            title: Lang.get('system', 'Notify'),
             text: notification.text,
             type: notification.type,
             hide: false,
@@ -221,8 +209,13 @@ $(function () {
     * */
     $(window).resize(function(){
         var height = $(window).height();
-        $('.modal-body').css('maxHeight', height - 120);
+        $('.modal-body').css('maxHeight', height - 150);
     });
+
+    /**
+    * Progress bar config
+    * */
+    NProgress.configure({minimum: 0.3});
 
     /**
      * Document Events
@@ -242,11 +235,17 @@ $(function () {
             (new Modal()).displayAjaxContent($(this));
             return false;
         })
+        .on('ajaxStart', function () {
+            NProgress.start();
+        })
+        .on('ajaxStop', function () {
+            NProgress.done();
+        })
         //Ошибка во время запроса
-        .on('ajaxError', function (XMLHttpRequest, response, errorThrown) {
+        .on('ajaxError', function (XMLHttpRequest, response) {
             if (typeof(response.responseText) !== 'undefined') {
                 new PNotify({
-                    title: Lang.get('system', 'Error'),//todo Lang.get()
+                    title: Lang.get('system', 'Error'),
                     text: response.responseText,
                     type: 'danger',
                     hide: false,

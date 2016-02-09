@@ -6,9 +6,12 @@ use yii\web\AssetBundle;
 
 class NprogressAsset extends AssetBundle
 {
-	public $sourcePath = '@app/vendor/nagser/base/assets/web/js/plugins/nprogress';
+	public $sourcePath = '@bower/nprogress';
 	public $js = [
 		'nprogress.js',
 	];
+    public $css = [
+        'nprogress.css'
+    ];
 
 }

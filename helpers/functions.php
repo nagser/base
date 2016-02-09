@@ -35,6 +35,18 @@ function v($obj, $key = 'id')
 }
 
 /*
+ * Возвращает первый аргумент
+ * */
+function value()
+{
+    $args = func_get_args();
+    foreach ($args as $name => $value) {
+        if($value) return $value;
+    }
+    return null;
+}
+
+/*
  * Продвинутый экспорт переменных в текстовый вид
  * */
 function var_export_min($var, $return = false)
