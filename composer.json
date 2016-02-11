@@ -21,9 +21,6 @@
         }
     },
     "extra": {
-        "bootstrap": "nagser\\base\\Bootstrap",
-        "branch-alias": {
-            "dev-master": "1.0.x-dev"
-        }
+        "bootstrap": "nagser\\base\\Bootstrap"
     }
 }
