@@ -1,0 +1,26 @@
+{
+    "name": "nagser/base",
+    "type": "yii2-extension",
+
+    "description": "The basic module of the system. It contains base classes: controllers, models, widgets and other",
+    "keywords": ["nagser"],
+    "license": "GPL-3.0+",
+    "support": {
+        "source": "https://github.com/nagser/base"
+    },
+    "authors": [
+        {
+            "name": "NagSer",
+            "email": "tech@eventarium.pro"
+        }
+    ],
+
+    "autoload": {
+        "psr-4": {
+            "nagser\\base\\": ""
+        }
+    },
+    "extra": {
+        "bootstrap": "nagser\\base\\Bootstrap"
+    }
+}
